@@ -9,7 +9,7 @@ North star: marketing site + real admin console, dogfooding semaAUTH for login, 
 - [x] `.env.example` with auth + API configuration
 - [ ] Production deployment target confirmed (Vercel recommended)
 
-## Stage 1 — Dogfood auth *(in progress)*
+## Stage 1 — Dogfood auth *(complete)*
 
 - [x] OAuth client `semaauth_website` (migration `012_semaauth_website_client.sql`)
 - [x] `@semaauth/sdk-web` integration
@@ -18,20 +18,20 @@ North star: marketing site + real admin console, dogfooding semaAUTH for login, 
 - [x] Protected `/dashboard/*` via session gate
 - [x] Header CTAs wired to login flow
 
-## Stage 2 — API layer & BFF
+## Stage 2 — API layer & BFF *(complete)*
 
-- [ ] Typed admin API client (`@semaauth/shared-types`)
-- [ ] Server proxy routes `/api/admin/*` with Bearer from session
-- [ ] TanStack Query hooks for dashboard data
-- [ ] Loading, error, and empty states
+- [x] Typed admin API client (`admin-types`, `admin-client`)
+- [x] Server proxy routes `/api/admin/*` with Bearer from session
+- [x] TanStack Query hooks for dashboard data
+- [x] Loading, error, and empty states
 
-## Stage 3 — Dashboard read-only (APIs exist)
+## Stage 3 — Dashboard read-only (APIs exist) *(complete)*
 
-- [ ] Users → `GET /admin/users`
-- [ ] Audit → `GET /admin/audit-events`
-- [ ] Settings → `GET/PATCH /admin/tenant/settings`
-- [ ] Overview metrics from live data
-- [ ] Session revoke action
+- [x] Users → `GET /admin/users`
+- [x] Audit → `GET /admin/audit-events`
+- [x] Settings → `GET /admin/tenant/settings`
+- [x] Overview metrics from live data
+- [x] Session revoke action
 
 ## Stage 4 — Apps, security, billing (backend gaps)
 
