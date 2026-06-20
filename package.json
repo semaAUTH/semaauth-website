@@ -3,15 +3,38 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm lint && pnpm typecheck && pnpm build",
+    "postinstall": "node scripts/build-semaauth-deps.mjs"
   },
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@hookform/resolvers": "^5.4.0",
+    "@radix-ui/react-dialog": "^1.1.17",
+    "@radix-ui/react-dropdown-menu": "^2.1.18",
+    "@radix-ui/react-slot": "^1.3.0",
+    "@semaauth/adapter-core": "github:semaAUTH/semaauth#main&path:packages/adapter-core",
+    "@semaauth/sdk-web": "github:semaAUTH/semaauth#main&path:sdk-web",
+    "@semaauth/shared-types": "github:semaAUTH/semaauth#main&path:packages/shared-types",
+    "@tanstack/react-query": "^5.101.0",
+    "baseline-browser-mapping": "^2.10.38",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.21.0",
     "next": "16.2.9",
+    "next-themes": "^0.4.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "react-hook-form": "^7.80.0",
+    "shadcn": "^4.11.0",
+    "tailwind-merge": "^3.6.0",
+    "tw-animate-css": "^1.4.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -23,5 +46,17 @@
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@semaauth/shared-types": "github:semaAUTH/semaauth#main&path:packages/shared-types",
+      "@semaauth/jwt-verify": "github:semaAUTH/semaauth#main&path:packages/jwt-verify"
+    },
+    "onlyBuiltDependencies": [
+      "@semaauth/shared-types",
+      "@semaauth/jwt-verify",
+      "@semaauth/adapter-core",
+      "@semaauth/sdk-web"
+    ]
   }
 }
