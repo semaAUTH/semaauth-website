@@ -5,6 +5,28 @@ const DEFAULT_TENANT = "00000000-0000-0000-0000-000000000001";
 const DEFAULT_CLIENT = "semaauth_website";
 const DEFAULT_REDIRECT = "http://localhost:3000/callback";
 
+const PRODUCTION_ENV_KEYS = [
+  "SEMAAUTH_ISSUER_URL",
+  "SEMAAUTH_CLIENT_ID",
+  "SEMAAUTH_TENANT_ID",
+  "NEXT_PUBLIC_SEMAAUTH_ISSUER_URL",
+  "NEXT_PUBLIC_SEMAAUTH_CLIENT_ID",
+  "NEXT_PUBLIC_SEMAAUTH_REDIRECT_URI",
+  "NEXT_PUBLIC_SEMAAUTH_TENANT_ID",
+] as const;
+
+function assertProductionEnv(): void {
+  if (process.env.NODE_ENV !== "production") {
+    return;
+  }
+  const missing = PRODUCTION_ENV_KEYS.filter((key) => !process.env[key]?.trim());
+  if (missing.length > 0) {
+    throw new Error(`Missing required production environment variables: ${missing.join(", ")}`);
+  }
+}
+
+assertProductionEnv();
+
 /** Server-side adapter config for BFF routes. */
 export function getAdapterConfig(): AdapterConfig {
   return {

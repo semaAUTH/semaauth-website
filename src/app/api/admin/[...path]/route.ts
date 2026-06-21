@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+import { buildSafeAdminBackendPath } from "@/lib/semaauth/admin-paths";
 import { proxyAdminRequest } from "@/lib/semaauth/admin-proxy";
 
 type RouteContext = {
@@ -6,7 +8,13 @@ type RouteContext = {
 
 async function forward(request: Request, context: RouteContext, method: string) {
   const { path } = await context.params;
-  const backendPath = `/admin/${path.join("/")}${new URL(request.url).search}`;
+  const backendPath = buildSafeAdminBackendPath(path, new URL(request.url).search);
+  if (!backendPath) {
+    return NextResponse.json(
+      { error: "forbidden", error_description: "Admin path not allowed" },
+      { status: 403 },
+    );
+  }
 
   const init: RequestInit = { method };
   if (method !== "GET" && method !== "HEAD") {

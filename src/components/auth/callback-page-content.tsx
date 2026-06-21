@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthClientConfig, getTenantId } from "@/lib/semaauth/config";
+import { safeReturnTo } from "@/lib/semaauth/safe-return-to";
 import { cn } from "@/lib/utils";
 
 const RETURN_TO_KEY = "semaauth_return_to";
@@ -28,10 +29,10 @@ export function CallbackPageContent() {
   const [verifying, setVerifying] = useState(false);
   const started = useRef(false);
 
-  const returnTo =
-    (typeof window !== "undefined" ? sessionStorage.getItem(RETURN_TO_KEY) : null) ??
-    searchParams.get("returnTo") ??
-    "/dashboard";
+  const returnTo = safeReturnTo(
+    typeof window !== "undefined" ? sessionStorage.getItem(RETURN_TO_KEY) : null,
+    safeReturnTo(searchParams.get("returnTo")),
+  );
 
   useEffect(() => {
     if (started.current) return;

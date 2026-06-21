@@ -71,7 +71,7 @@ North star: marketing site + real admin console, dogfooding semaAUTH for login, 
 
 ## Local dev (Stage 1)
 
-1. Run migrations on backend-core (includes `012_semaauth_website_client.sql`)
+1. Run migrations on backend-core (includes `012_semaauth_website_client.sql` for OAuth client `semaauth_website`)
 2. Start backend: `backend-core` on `:8080`
 3. Copy `.env.example` → `.env.local` in semaauth-website
 
