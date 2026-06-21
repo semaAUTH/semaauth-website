@@ -45,6 +45,14 @@ export function buildSafeAdminBackendPath(
         return `/admin/audit-events${search}`;
       }
       return null;
+    case "clients":
+      if (segments.length === 1) {
+        return `/admin/clients${search}`;
+      }
+      if (segments.length === 2 && segmentIsSafe(segments[1]!)) {
+        return `/admin/clients/${segments[1]}${search}`;
+      }
+      return null;
     default:
       return null;
   }

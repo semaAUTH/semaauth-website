@@ -1,6 +1,8 @@
 import type {
   AdminApiErrorBody,
   AdminAuditEventsResponse,
+  AdminClientResponse,
+  AdminClientsResponse,
   AdminTenantSettingsResponse,
   AdminUsersResponse,
 } from "@/lib/semaauth/admin-types";
@@ -99,4 +101,27 @@ export function revokeUserSessions(accessToken: string, userId: string) {
     `/users/${encodeURIComponent(userId)}/sessions/revoke`,
     { method: "POST" }
   );
+}
+
+export function listClients(accessToken: string, params?: { limit?: number; offset?: number }) {
+  const search = new URLSearchParams();
+  if (params?.limit != null) search.set("limit", String(params.limit));
+  if (params?.offset != null) search.set("offset", String(params.offset));
+  const qs = search.toString();
+  return adminFetch<AdminClientsResponse>(accessToken, `/clients${qs ? `?${qs}` : ""}`);
+}
+
+export function createClient(
+  accessToken: string,
+  body: {
+    name: string;
+    redirect_uris: string[];
+    client_type?: string;
+    allowed_scopes?: string[];
+  }
+) {
+  return adminFetch<AdminClientResponse>(accessToken, "/clients", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
 }

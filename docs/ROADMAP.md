@@ -35,8 +35,8 @@ North star: marketing site + real admin console, dogfooding semaAUTH for login, 
 
 ## Stage 4 — Apps, security, billing (backend gaps)
 
-- [ ] `/admin/apps` CRUD in backend-core
-- [ ] Wire Applications page
+- [x] `/admin/clients` CRUD in backend-core (list, create, get, patch — public clients)
+- [x] Wire Applications page to live admin API + create form
 - [ ] Security policies beyond tenant settings
 - [ ] Billing (real or honestly deferred)
 

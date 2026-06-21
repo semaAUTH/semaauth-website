@@ -46,6 +46,26 @@ export type AdminTenantSettingsResponse = {
   settings: Record<string, unknown>;
 };
 
+export type AdminOAuthClient = {
+  id: string;
+  client_id: string;
+  name: string;
+  client_type: "public" | "confidential";
+  redirect_uris: string[];
+  allowed_scopes: string[];
+  created_at: string;
+};
+
+export type AdminClientsResponse = {
+  clients: AdminOAuthClient[];
+  limit: number;
+  offset: number;
+};
+
+export type AdminClientResponse = {
+  client: AdminOAuthClient;
+};
+
 export type AdminApiErrorBody = {
   error: string;
   error_description?: string;

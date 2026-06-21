@@ -5,7 +5,9 @@ import { useAccessToken } from "@semaauth/sdk-web";
 import {
   getTenantSettings,
   listAuditEvents,
+  listClients,
   listUsers,
+  createClient,
   patchTenantSettings,
   revokeUserSessions,
 } from "@/lib/semaauth/admin-client";
@@ -64,6 +66,30 @@ export function usePatchTenantSettings() {
     mutationFn: (patch: Record<string, unknown>) => patchTenantSettings(accessToken!, patch),
     onSuccess: (data) => {
       queryClient.setQueryData(["admin", "tenant-settings"], data);
+    },
+  });
+}
+
+export function useAdminClients() {
+  const accessToken = useAccessToken();
+
+  return useQuery({
+    queryKey: ["admin", "clients"],
+    queryFn: () => listClients(accessToken!, { limit: 100 }),
+    enabled: Boolean(accessToken),
+  });
+}
+
+export function useCreateClient() {
+  const accessToken = useAccessToken();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (body: { name: string; redirect_uris: string[] }) =>
+      createClient(accessToken!, body),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["admin", "clients"] });
+      void queryClient.invalidateQueries({ queryKey: ["admin", "audit-events"] });
     },
   });
 }
